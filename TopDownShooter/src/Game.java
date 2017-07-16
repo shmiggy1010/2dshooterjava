@@ -131,6 +131,9 @@ public class Game extends Canvas implements Runnable{
 				if (blue == 255){
 					handler.addObject(new Player(xx*32, yy*32, ID.Player, handler));
 				}
+				if (green == 255){
+					handler.addObject(new Enemy(xx*32, yy*32, ID.Enemy, handler));
+				}
 				
 			}
 		}

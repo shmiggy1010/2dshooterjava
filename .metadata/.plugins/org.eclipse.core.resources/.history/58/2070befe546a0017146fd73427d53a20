@@ -1,0 +1,79 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.util.Random;
+
+public class Enemy extends GameObject {
+	
+	private Handler handler; //for collision detection
+	Random random = new Random();
+	int hp = 100;
+	int randomMovement = 0;
+
+	public Enemy(int x, int y, ID id, Handler handler) {
+		super(x, y, id);
+		this.handler = handler;
+	}
+
+	
+	public void tick() {
+		x += velX;
+		y += velY;
+		
+		randomMovement = random.nextInt(10); //between 0 and 10
+		
+		for(int i = 0; i < handler.object.size(); i++){
+			GameObject tempObject = handler.object.get(i);
+			
+			if(tempObject.getId() == ID.Block){
+				if(getBoundsBig().intersects(tempObject.getBounds())){
+					velX += (velX*2) * -1;
+					velY += (velY*2) * -1;
+				}
+			}
+			if(tempObject.getId() == ID.Bullet){
+				if(getBounds().intersects(tempObject.getBounds())){
+					hp -= 50;
+					handler.removeObject(tempObject);
+				}
+			}
+		}
+		
+		if(randomMovement == 0){
+			velX = (int)(Math.random() * 7) - 3; //idk between -4 and 4 somehow
+			velY = (int)(Math.random() * 7) - 3;
+		}
+		
+		if(hp <= 0){
+			handler.removeObject(this);
+		}
+		
+	}
+
+	
+	public void render(Graphics g) {
+		g.setColor(Color.CYAN);
+		g.fillRect(x, y, 32, 32);
+		
+		//this is for visual representation of the larger bounds used for collision
+		  Graphics2D g2d = (Graphics2D) g;
+		  
+		  g.setColor(Color.green);
+		  g2d.draw(getBoundsBig());
+		 
+		
+	}
+
+	
+	public Rectangle getBounds() {
+		
+		return new Rectangle(x,y,32,32);
+	}
+public Rectangle getBoundsBig() {
+		
+		return new Rectangle(x-16,y-16,74,74);
+	}
+	
+
+}
