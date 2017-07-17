@@ -10,8 +10,8 @@ public class Bullet extends GameObject {
 		super(x, y, id);
 		this.handler = handler;
 		
-		velX = (mx - x) / 10; //the problem with this shooting algorithm is that it depends where you click on how hard the bullet goes
-		velY = (my - y) / 10; //could use this algorithm to do damage, slower more damage faster less damage (for skill cap)
+		velX = (mx - x) / 10;
+		velY = (my - y) / 10;
 	}
 
 	public void tick() {

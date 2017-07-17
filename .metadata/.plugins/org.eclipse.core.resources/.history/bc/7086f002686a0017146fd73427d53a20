@@ -125,8 +125,6 @@ public class Game extends Canvas implements Runnable{
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 				
-				//the pixel color dictates the item spawned in game. pretty much using shitty pixels to dictate game spawns
-				
 				if (red == 255){
 					handler.addObject(new Block(xx*32, yy*32, ID.Block));
 				}
